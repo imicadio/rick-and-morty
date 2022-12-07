@@ -1,18 +1,14 @@
-interface IStatus {
-  Alive: "Alive";
-  Dead: "Dead";
-  Unknown: "unknown";
-}
+export type IStatus = "Alive" | "Dead" | "unknown";
 
-type Gender = "Female" | "Male" | "Genderless" | "unknown";
+export type Gender = "Female" | "Male" | "Genderless" | "unknown";
 
 // I know that I shouldn't write it like this, but I wanted to practice the skills
-interface IUrl {
+export interface IUrl {
   name: string;
   url: string;
 }
 
-export interface ICharacter extends IName {
+export interface ICharacter extends IUrl {
   id: number;
   status: IStatus;
   species: string;
@@ -29,4 +25,13 @@ interface IPagination {
   pages: number;
   next: string;
   prev: string;
+}
+
+export interface ITableHeader {
+  name: string;
+  species: string;
+  avatar: string;
+  origin: IUrl;
+  gender: Gender;
+  status: IStatus;
 }
