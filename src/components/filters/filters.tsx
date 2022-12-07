@@ -16,6 +16,7 @@ const Filters: FC<FilterType> = ({ customClass }) => {
   const [age, setAge] = useState<string>("");
 
   const species: string[] = [
+    "",
     "Human",
     "Alien",
     "Humanoid",
@@ -34,7 +35,9 @@ const Filters: FC<FilterType> = ({ customClass }) => {
   };
 
   const renderOptions = species.map((item: string) => (
-    <MenuItem value={item} key={item}>{item}</MenuItem>
+    <MenuItem value={item} key={item}>
+      {item}
+    </MenuItem>
   ));
 
   return (

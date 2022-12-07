@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, MutableRefObject, useRef } from "react";
 import {
   Paper,
   Table,
@@ -8,14 +8,18 @@ import {
   TablePagination,
   Checkbox,
   TableRow,
+  Typography,
 } from "@mui/material";
-import { ITableHeader } from "../../model";
+import { ITableHeader, IUrl } from "../../model";
 import TableHeader from "./table-header/table-header";
+import RenderRows from "./test";
 
 const TableCharacters: FC<{ rows: ITableHeader[]; selected: string[] }> = ({
   rows,
   selected,
 }) => {
+  
+
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
   return (
     <Paper sx={{ width: "100%", mb: 2 }}>
@@ -34,51 +38,7 @@ const TableCharacters: FC<{ rows: ITableHeader[]; selected: string[] }> = ({
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
-                  <TableRow
-                    hover
-                    // onClick={(event) => handleClick(event, row.name)}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.name}
-                    selected={isItemSelected}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                    >
-                      {row.name}
-                      <br />
-                      {row.species}
-                    </TableCell>
-                    <TableCell align="left">
-                      <img
-                        src={row.avatar}
-                        alt={row.name}
-                        style={{
-                          maxWidth: "50px",
-                          maxHeight: "50px",
-                          borderRadius: '15px',
-                          border: '2px dashed #E5EAF0',
-                          filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell align="left">{row.origin.name}</TableCell>
-                    <TableCell align="left">{row.gender}</TableCell>
-                    <TableCell align="left">{row.status}</TableCell>
-                  </TableRow>
+                  <RenderRows row={row} key={index} />
                 );
               })}
             {/* {emptyRows > 0 && (

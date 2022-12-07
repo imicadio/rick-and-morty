@@ -1,10 +1,5 @@
 import React, { FC } from "react";
-import {
-  TableHead,
-  TableCell,
-  Checkbox,
-  TableRow,
-} from "@mui/material";
+import { TableHead, TableCell, Checkbox, TableRow } from "@mui/material";
 import { Gender, IStatus, IUrl } from "../../../model";
 
 const TableHeader: FC<{}> = () => {
@@ -18,7 +13,7 @@ const TableHeader: FC<{}> = () => {
 
   type HeadCell = {
     id: keyof Data;
-  }
+  };
   const headCells: readonly HeadCell[] = [
     {
       id: "name",
@@ -56,7 +51,8 @@ const TableHeader: FC<{}> = () => {
             key={headCell.id}
             align="left"
             sx={{
-                textTransform: 'capitalize'
+              textTransform: "capitalize",
+              px: "25px",
             }}
           >
             {headCell.id}
