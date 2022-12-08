@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { ITableHeader, IUrl } from "../../model";
 import TableHeader from "./table-header/table-header";
-import RenderRows from "./test";
+import RenderRows from "./TableRow";
 
 const TableCharacters: FC<{ rows: ITableHeader[]; selected: string[] }> = ({
   rows,

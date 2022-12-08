@@ -6,20 +6,26 @@ import {
   Typography,
   Tooltip,
 } from "@mui/material";
-import { ITableHeader, IUrl } from "../../model";
+import { ITableHeader, IUrl, IStatus } from "../../model.d";
 
 const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
   const widthTextTruncate =
     useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const returnText = (row: IUrl, refek: MutableRefObject<HTMLInputElement>) => {
-    if (refek.current)
-      console.log(refek.current.offsetWidth < refek.current.scrollWidth);
-    return (
-      <Tooltip title={row.name}>
-        <span>{row.name}</span>
-      </Tooltip>
-    );
+    if (
+      refek.current &&
+      refek.current.offsetWidth < refek.current.scrollWidth
+    ) {
+      return (
+        <Tooltip title={row.name}>
+          <span>{row.name}</span>
+        </Tooltip>
+      );
+    }
+
+    return <span>{row.name}</span>;
+    // console.log(refek.current.offsetWidth < refek.current.scrollWidth);
   };
 
   return (
@@ -31,6 +37,9 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
       tabIndex={-1}
       key={row.name}
       //   selected={isItemSelected}
+      sx={{
+        backgroundColor: row.status.name === IStatus.DEAD ? "#F6F8FA" : null,
+      }}
     >
       <TableCell padding="checkbox">
         <Checkbox
@@ -51,9 +60,28 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           fontSize: "15px",
         }}
       >
-        {row.name}
-        <br />
-        {row.species}
+        <Typography
+          variant="body1"
+          component="p"
+          sx={{
+            color: row.status.name === IStatus.DEAD ? "#5F6569" : "#1A2328",
+            fontWeight: 500,
+            fontSize: "15px",
+          }}
+        >
+          {row.name}
+        </Typography>
+        <Typography
+          variant="body1"
+          component="p"
+          sx={{
+            color: row.status.name === IStatus.DEAD ? "#8C9193" : "#484F53",
+            fontSize: "15px",
+            fontWeight: 400,
+          }}
+        >
+          {row.species}
+        </Typography>
       </TableCell>
       <TableCell
         align="left"
@@ -90,11 +118,14 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
-            // display: "-webkit-box",
-            // WebkitLineClamp: "1",
-            // WebkitBoxOrient: "vertical",
             fontSize: "15px",
             maxWidth: "161px",
+            color:
+              row.status.name === IStatus.DEAD
+                ? IStatus.UNKNOWN === row.origin.name
+                  ? "#C6C8C9"
+                  : "#5F6569"
+                : "#1A2328",
           }}
           ref={widthTextTruncate}
         >
@@ -107,6 +138,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           px: "25px",
           width: "162px",
           fontSize: "15px",
+          color: row.status.name === IStatus.DEAD ? "#5F6569" : "#1A2328",
         }}
       >
         {row.gender}
@@ -117,9 +149,23 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           px: "25px",
           width: "162px",
           fontSize: "15px",
+          color: "#1A2328",
         }}
       >
-        {row.status}
+        <Typography
+          variant="body2"
+          component="p"
+          sx={{
+            display: "flex",
+            gap: "8px",
+            fontSize: "15px",
+            alignItems: "center",
+            color: row.status.name === IStatus.UNKNOWN ? "#5F6569" : "#1A2328",
+          }}
+        >
+          {row.status.icon}
+          {row.status.name}
+        </Typography>
       </TableCell>
     </TableRow>
   );

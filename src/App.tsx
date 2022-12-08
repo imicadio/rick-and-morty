@@ -4,14 +4,6 @@ import {
   Box,
   Container,
   Typography,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TablePagination,
-  Checkbox,
-  TableRow,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./App.scss";
@@ -19,11 +11,12 @@ import Filters from "./components/filters/filters";
 import {
   Gender,
   ICharacter,
+  IconSVG,
   IPagination,
-  IStatus,
+  IStatusIcons,
   ITableHeader,
   IUrl,
-} from "./model";
+} from "./model.d";
 import { API_URL } from "./shared/link";
 import TableCharacters from "./components/table/table-characters";
 
@@ -57,7 +50,7 @@ function App() {
     avatar: string,
     origin: IUrl,
     gender: Gender,
-    status: IStatus
+    status: IStatusIcons
   ): ITableHeader => {
     return {
       name,
@@ -82,7 +75,7 @@ function App() {
               item.image,
               item.origin,
               item.gender,
-              item.status
+              { name: item.status, icon: IconSVG[item.status] }
             )
           );
         });
@@ -93,7 +86,7 @@ function App() {
   }, [currentPage]);
 
   useEffect(() => {
-    console.log(rows);
+    // console.log(rows);
   }, [rows]);
 
   return (

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { TableHead, TableCell, Checkbox, TableRow } from "@mui/material";
-import { Gender, IStatus, IUrl } from "../../../model";
+import { Gender, TStatus, IUrl } from "../../../model.d";
 
 const TableHeader: FC<{}> = () => {
   interface Data {
@@ -8,7 +8,7 @@ const TableHeader: FC<{}> = () => {
     avatar: string;
     origin: IUrl;
     gender: Gender;
-    status: IStatus;
+    status: TStatus;
   }
 
   type HeadCell = {
