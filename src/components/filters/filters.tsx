@@ -1,4 +1,4 @@
-import React, { useState, FC } from "react";
+import React, { FC } from "react";
 import {
   Box,
   TextField,
@@ -6,17 +6,20 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem,
-  SelectChangeEvent,
+  MenuItem,  
 } from "@mui/material";
 import { FilterType } from "./model";
 import search from "../../assets/search.svg";
 
-const Filters: FC<FilterType> = ({ customClass }) => {
-  const [age, setAge] = useState<string>("");
+const Filters: FC<FilterType> = ({
+  customClass,
+  handleSearch,
+  handleSelectSpecies,
+  selectSpecies
+}) => {
 
   const species: string[] = [
-    "",
+    " ",
     "Human",
     "Alien",
     "Humanoid",
@@ -30,19 +33,20 @@ const Filters: FC<FilterType> = ({ customClass }) => {
     "Planet",
   ];
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
-  };
+  // const handleChange = (event: SelectChangeEvent) => {
+  //   setAge(event.target.value as string);
+  // };
 
   const renderOptions = species.map((item: string) => (
     <MenuItem value={item} key={item}>
-      {item}
+      {item.length === 1 ? "Species" : item}
     </MenuItem>
   ));
 
   return (
     <Box sx={customClass}>
       <TextField
+        onChange={handleSearch}
         sx={{
           ".MuiOutlinedInput-root": {
             maxWidth: "140px",
@@ -51,6 +55,7 @@ const Filters: FC<FilterType> = ({ customClass }) => {
           },
           ".MuiOutlinedInput-input": {
             padding: 0,
+            pl: 2,
             height: "40px",
           },
           ".MuiInputLabel-root": {
@@ -96,8 +101,8 @@ const Filters: FC<FilterType> = ({ customClass }) => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={age}
-          onChange={handleChange}
+          value={selectSpecies}
+          onChange={handleSelectSpecies}
         >
           {renderOptions}
         </Select>

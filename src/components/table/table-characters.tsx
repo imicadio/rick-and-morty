@@ -1,14 +1,9 @@
-import React, { FC, MutableRefObject, useRef } from "react";
+import React, { FC } from "react";
 import {
   Paper,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
-  TablePagination,
-  Checkbox,
-  TableRow,
-  Typography,
 } from "@mui/material";
 import { ITableHeader, IUrl } from "../../model";
 import TableHeader from "./table-header/table-header";
@@ -22,7 +17,7 @@ const TableCharacters: FC<{ rows: ITableHeader[]; selected: string[] }> = ({
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
   return (
-    <Paper sx={{ width: "100%", mb: 2 }}>
+    <Paper elevation={8} sx={{ width: "100%", mb: 2 }}>
       <TableContainer>
         <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
           <TableHeader

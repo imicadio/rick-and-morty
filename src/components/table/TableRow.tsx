@@ -1,4 +1,4 @@
-import React, { FC, MutableRefObject, useRef } from "react";
+import React, { useState, FC, MutableRefObject, useRef } from "react";
 import {
   TableCell,
   Checkbox,
@@ -7,28 +7,35 @@ import {
   Tooltip,
 } from "@mui/material";
 import { ITableHeader, IUrl, IStatus } from "../../model.d";
+import { useEffect } from "react";
 
 const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
-  const PADDING_Y = '9px'
+  const [disableTooltip, setDisableTooltip] = useState<boolean>(true);
+  const PADDING_Y = "9px";
 
-  const widthTextTruncate =
-    useRef() as React.MutableRefObject<HTMLInputElement>;
+  const refTextTruncate = useRef() as MutableRefObject<HTMLInputElement>;
 
-  const returnText = (row: IUrl, refek: MutableRefObject<HTMLInputElement>) => {
+  // const returnText = (
+  //   row: IUrl,
+  //   textTruncate: MutableRefObject<HTMLInputElement>
+  // ) => {
+  //   console.log(textTruncate.current);
+
+  //   return (
+
+  //   );
+
+  //   // return <span>{row.name}</span>;
+  //   // console.log(refek.current.offsetWidth < refek.current.scrollWidth);
+  // };
+
+  useEffect(() => {
     if (
-      refek.current &&
-      refek.current.offsetWidth < refek.current.scrollWidth
+      refTextTruncate.current.scrollWidth > refTextTruncate.current.offsetWidth
     ) {
-      return (
-        <Tooltip title={row.name}>
-          <span>{row.name}</span>
-        </Tooltip>
-      );
+      setDisableTooltip(() => false);
     }
-
-    return <span>{row.name}</span>;
-    // console.log(refek.current.offsetWidth < refek.current.scrollWidth);
-  };
+  }, [refTextTruncate]);
 
   return (
     <TableRow
@@ -60,7 +67,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           px: "25px",
           width: "231px",
           fontSize: "15px",
-          py: PADDING_Y
+          py: PADDING_Y,
         }}
       >
         <Typography
@@ -70,7 +77,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
             color: row.status.name === IStatus.DEAD ? "#5F6569" : "#1A2328",
             fontWeight: 500,
             fontSize: "15px",
-            py: PADDING_Y
+            py: PADDING_Y,
           }}
         >
           {row.name}
@@ -93,7 +100,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           width: "162px",
           px: "25px",
           fontSize: "15px",
-          py: PADDING_Y
+          py: PADDING_Y,
         }}
       >
         <img
@@ -114,7 +121,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
         sx={{
           px: "25px",
           width: "162px",
-          py: PADDING_Y
+          py: PADDING_Y,
         }}
       >
         <Typography
@@ -133,9 +140,11 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
                   : "#5F6569"
                 : "#1A2328",
           }}
-          ref={widthTextTruncate}
+          ref={refTextTruncate}
         >
-          {returnText(row.origin, widthTextTruncate)}
+          <Tooltip title={row.origin.name} disableHoverListener={disableTooltip}>
+            <span>{row.origin.name}</span>
+          </Tooltip>
         </Typography>
       </TableCell>
       <TableCell
@@ -145,7 +154,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           width: "162px",
           fontSize: "15px",
           color: row.status.name === IStatus.DEAD ? "#5F6569" : "#1A2328",
-          py: PADDING_Y
+          py: PADDING_Y,
         }}
       >
         {row.gender}
@@ -157,7 +166,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           width: "162px",
           fontSize: "15px",
           color: "#1A2328",
-          py: PADDING_Y
+          py: PADDING_Y,
         }}
       >
         <Typography

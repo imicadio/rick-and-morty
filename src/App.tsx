@@ -1,10 +1,6 @@
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./theme/theme";
-import {
-  Box,
-  Container,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Typography, SelectChangeEvent } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./App.scss";
 import Filters from "./components/filters/filters";
@@ -19,6 +15,7 @@ import {
 } from "./model.d";
 import { API_URL } from "./shared/link";
 import TableCharacters from "./components/table/table-characters";
+import CircularProgress from '@mui/material/CircularProgress';
 
 function App() {
   const [data, setData] = useState<Record<string, any>>();
@@ -26,6 +23,8 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [rows, setRows] = useState<ITableHeader[]>([]);
   const [selected, setSelected] = useState<string[]>([]);
+  const [searchWords, setSearchWords] = useState<string>("");
+  const [selectSpecies, setSelectSpecies] = useState<string>("");
 
   const fetchCharacters = (
     page: number,
@@ -42,6 +41,14 @@ function App() {
       .then((data) => {
         return data;
       });
+  };
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchWords(event.target.value);
+  };
+
+  const handleSelectSpecies = (event: SelectChangeEvent) => {
+    setSelectSpecies(event.target.value as string);
   };
 
   const createData = (
@@ -64,7 +71,7 @@ function App() {
 
   useEffect(() => {
     setIsLoading(() => true);
-    fetchCharacters(currentPage)
+    fetchCharacters(currentPage, searchWords, selectSpecies)
       .then((response) => {
         const returnRows: ITableHeader[] = [];
         response.results.map((item: ICharacter) => {
@@ -83,11 +90,18 @@ function App() {
       })
       .catch((error) => console.log(error));
     setIsLoading(() => false);
-  }, [currentPage]);
+  }, [currentPage, searchWords, selectSpecies]);
 
   useEffect(() => {
     // console.log(rows);
-  }, [rows]);
+  }, [searchWords]);
+
+  if (isLoading)
+    return (
+      <Box sx={{ display: "flex" }}>
+        <CircularProgress />
+      </Box>
+    );
 
   return (
     <ThemeProvider theme={theme}>
@@ -95,7 +109,12 @@ function App() {
         <Typography variant="h5" component="h2" fontWeight="700">
           Characters
         </Typography>
-        <Filters customClass={{ my: 3 }} />
+        <Filters
+          handleSearch={handleSearch}
+          selectSpecies={selectSpecies}
+          handleSelectSpecies={handleSelectSpecies}
+          customClass={{ my: 3 }}
+        />
 
         <Box sx={{ width: "100%" }}>
           <TableCharacters rows={rows} selected={selected} />
