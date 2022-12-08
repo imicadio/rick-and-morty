@@ -6,57 +6,41 @@ import {
   Typography,
   Tooltip,
 } from "@mui/material";
-import { ITableHeader, IUrl, IStatus } from "../../model.d";
-import { useEffect } from "react";
+import { ITableHeader, IStatus } from "../../model.d";
 
 const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
   const [disableTooltip, setDisableTooltip] = useState<boolean>(true);
-  const PADDING_Y = "9px";
+  const PADDING_Y = "17px";
+  const PADDING_TOP = '21px';
 
   const refTextTruncate = useRef() as MutableRefObject<HTMLInputElement>;
 
-  // const returnText = (
-  //   row: IUrl,
-  //   textTruncate: MutableRefObject<HTMLInputElement>
-  // ) => {
-  //   console.log(textTruncate.current);
-
-  //   return (
-
-  //   );
-
-  //   // return <span>{row.name}</span>;
-  //   // console.log(refek.current.offsetWidth < refek.current.scrollWidth);
-  // };
-
-  useEffect(() => {
+  const activeTooltip = (event: React.MouseEvent<HTMLDivElement>) => {
     if (
       refTextTruncate.current.scrollWidth > refTextTruncate.current.offsetWidth
     ) {
-      setDisableTooltip(() => false);
+      return setDisableTooltip(() => false);
     }
-  }, [refTextTruncate]);
+    return setDisableTooltip(() => true);
+  };
 
   return (
     <TableRow
       hover
-      // onClick={(event) => handleClick(event, row.name)}
+      onMouseOver={(e) => activeTooltip(e)}
       role="checkbox"
-      //   aria-checked={isItemSelected}
       tabIndex={-1}
       key={row.name}
-      //   selected={isItemSelected}
       sx={{
+        verticalAlign: 'top',
         backgroundColor: row.status.name === IStatus.DEAD ? "#F6F8FA" : null,
       }}
     >
-      <TableCell padding="checkbox">
+      <TableCell padding="checkbox" sx={{
+        verticalAlign: 'middle'
+      }}>
         <Checkbox
           color="primary"
-          //   checked={isItemSelected}
-          //   inputProps={{
-          //     "aria-labelledby": labelId,
-          //   }}
         />
       </TableCell>
       <TableCell
@@ -77,7 +61,6 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
             color: row.status.name === IStatus.DEAD ? "#5F6569" : "#1A2328",
             fontWeight: 500,
             fontSize: "15px",
-            py: PADDING_Y,
           }}
         >
           {row.name}
@@ -107,8 +90,8 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           src={row.avatar}
           alt={row.name}
           style={{
-            maxWidth: "50px",
-            maxHeight: "50px",
+            maxWidth: "46px",
+            maxHeight: "46px",
             borderRadius: "15px",
             border: "2px dashed #E5EAF0",
             filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
@@ -122,6 +105,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           px: "25px",
           width: "162px",
           py: PADDING_Y,
+          pt: PADDING_TOP,
         }}
       >
         <Typography
@@ -142,7 +126,10 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           }}
           ref={refTextTruncate}
         >
-          <Tooltip title={row.origin.name} disableHoverListener={disableTooltip}>
+          <Tooltip
+            title={row.origin.name}
+            disableHoverListener={disableTooltip}
+          >
             <span>{row.origin.name}</span>
           </Tooltip>
         </Typography>
@@ -155,6 +142,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           fontSize: "15px",
           color: row.status.name === IStatus.DEAD ? "#5F6569" : "#1A2328",
           py: PADDING_Y,
+          pt: PADDING_TOP,
         }}
       >
         {row.gender}
@@ -167,6 +155,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           fontSize: "15px",
           color: "#1A2328",
           py: PADDING_Y,
+          pt: PADDING_TOP,
         }}
       >
         <Typography

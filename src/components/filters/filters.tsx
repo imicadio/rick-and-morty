@@ -33,10 +33,6 @@ const Filters: FC<FilterType> = ({
     "Planet",
   ];
 
-  // const handleChange = (event: SelectChangeEvent) => {
-  //   setAge(event.target.value as string);
-  // };
-
   const renderOptions = species.map((item: string) => (
     <MenuItem value={item} key={item}>
       {item.length === 1 ? "Species" : item}
@@ -63,6 +59,7 @@ const Filters: FC<FilterType> = ({
             lineHeight: 1,
             color: "#8C9193",
           },
+          backgroundColor: 'white'
         }}
         label="Search"
         InputProps={{
@@ -95,6 +92,7 @@ const Filters: FC<FilterType> = ({
               display: "none",
             },
           },
+          backgroundColor: 'white'
         }}
       >
         <InputLabel id="demo-simple-select-label">Species</InputLabel>

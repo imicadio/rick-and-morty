@@ -30,7 +30,6 @@ function App() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [rows, setRows] = useState<ITableHeader[]>([]);
-  const [selected, setSelected] = useState<string[]>([]);
   const [searchWords, setSearchWords] = useState<string>("");
   const [selectSpecies, setSelectSpecies] = useState<string>("");
   const [totalPages, setTotalPages] = useState<number>();
@@ -132,7 +131,6 @@ function App() {
   useEffect(() => {
     const dividerItems = 20 / 5;
     const pageFrom = currentPageRequest * dividerItems - dividerItems + 1;
-    // const pageTo = currentPageRequest * dividerItems;
     const currentPageData = currentPage - pageFrom + 1;
     const indexOfLastProduct = currentPageData * 5;
     const indexOfFirstProduct = indexOfLastProduct - 5;
@@ -149,12 +147,15 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="lg" sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center'
-      }}>
+      <Container
+        maxWidth="lg"
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
         <Typography variant="h5" component="h2" fontWeight="700">
           Characters
         </Typography>
@@ -166,7 +167,7 @@ function App() {
         />
 
         <Box sx={{ width: "100%" }}>
-          <TableCharacters rows={data} selected={selected} />
+          <TableCharacters rows={data} />
         </Box>
         <Stack spacing={2} my={3}>
           <Pagination
@@ -174,8 +175,21 @@ function App() {
             variant="outlined"
             shape="rounded"
             sx={{
+              color: "#fff",
               display: "flex",
               justifyContent: "flex-end",
+              ul: {
+                "& .MuiPaginationItem-root": {
+                  backgroundColor: "#fff",
+                  boxShadow: '0px 2px 4px #DDE3EC',
+                  border: '1px solid #BAC6D8'
+                },
+                "& .MuiPaginationItem-ellipsis": {
+                  backgroundColor: "unset !important",
+                  boxShadow: "unset !important",
+                  border: 'unset'
+                },
+              },
             }}
             onChange={(e, page) => handlePage(page)}
           />

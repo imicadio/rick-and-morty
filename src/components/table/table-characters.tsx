@@ -1,62 +1,30 @@
 import React, { FC } from "react";
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableContainer,
-} from "@mui/material";
-import { ITableHeader, IUrl } from "../../model";
+import { Paper, Table, TableBody, TableContainer } from "@mui/material";
+import { ITableHeader } from "../../model";
 import TableHeader from "./table-header/table-header";
-import RenderRows from "./TableRow";
+import RenderRows from "./table-row";
 
-const TableCharacters: FC<{ rows: ITableHeader[]; selected: string[] }> = ({
-  rows,
-  selected,
-}) => {
-  
-
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
+const TableCharacters: FC<{ rows: ITableHeader[] }> = ({ rows }) => {
   return (
-    <Paper elevation={8} sx={{ width: "100%", mb: 2 }}>
+    <Paper
+      sx={{
+        width: "100%",
+        mb: 2,
+        boxShadow: "unset",
+        filter: "drop-shadow(0px 2px 18px #DDE3EC)",
+      }}
+    >
       <TableContainer>
         <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-          <TableHeader
-          // numSelected={selected.length}
-          // // onSelectAllClick={handleSelectAllClick}
-          // // onRequestSort={handleRequestSort}
-          // rowCount={rows && rows.length}
-          />
+          <TableHeader />
           <TableBody>
             {rows != null &&
               rows.map((row, index) => {
-                const isItemSelected = isSelected(row.name);
-                const labelId = `enhanced-table-checkbox-${index}`;
-
-                return (
-                  <RenderRows row={row} key={index} />
-                );
+                return <RenderRows row={row} key={index} />;
               })}
-            {/* {emptyRows > 0 && (
-                    <TableRow
-                      style={{
-                        height:  53 * emptyRows,
-                      }}
-                    >
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )} */}
           </TableBody>
         </Table>
       </TableContainer>
-      {/* <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            /> */}
     </Paper>
   );
 };
