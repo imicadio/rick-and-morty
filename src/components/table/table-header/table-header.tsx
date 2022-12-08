@@ -53,6 +53,8 @@ const TableHeader: FC<{}> = () => {
             sx={{
               textTransform: "capitalize",
               px: "25px",
+              py: "8px",
+              color: "#484F53",
             }}
           >
             {headCell.id}

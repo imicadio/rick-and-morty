@@ -9,6 +9,8 @@ import {
 import { ITableHeader, IUrl, IStatus } from "../../model.d";
 
 const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
+  const PADDING_Y = '9px'
+
   const widthTextTruncate =
     useRef() as React.MutableRefObject<HTMLInputElement>;
 
@@ -58,6 +60,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           px: "25px",
           width: "231px",
           fontSize: "15px",
+          py: PADDING_Y
         }}
       >
         <Typography
@@ -67,6 +70,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
             color: row.status.name === IStatus.DEAD ? "#5F6569" : "#1A2328",
             fontWeight: 500,
             fontSize: "15px",
+            py: PADDING_Y
           }}
         >
           {row.name}
@@ -89,6 +93,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           width: "162px",
           px: "25px",
           fontSize: "15px",
+          py: PADDING_Y
         }}
       >
         <img
@@ -109,6 +114,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
         sx={{
           px: "25px",
           width: "162px",
+          py: PADDING_Y
         }}
       >
         <Typography
@@ -139,6 +145,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           width: "162px",
           fontSize: "15px",
           color: row.status.name === IStatus.DEAD ? "#5F6569" : "#1A2328",
+          py: PADDING_Y
         }}
       >
         {row.gender}
@@ -150,6 +157,7 @@ const RenderRows: FC<{ row: ITableHeader }> = ({ row }) => {
           width: "162px",
           fontSize: "15px",
           color: "#1A2328",
+          py: PADDING_Y
         }}
       >
         <Typography
