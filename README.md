@@ -45,6 +45,7 @@ Rick and Morty display data in table using:
     - [x] Filter from 'Species'
     - [x] Dynamic pagination. Depending on the returned items
 - [x] Tooltip and truncate text in 'origin' column
+- [x] TypeScript enum icons
 
 
 ## Contact
